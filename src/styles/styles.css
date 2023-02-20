@@ -1,0 +1,66 @@
+:root {
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  /* colors */
+  --primary-color: #f0a868;
+  --secondary-color: blue;
+  --tertiary-color: #a4b8c4;
+  --light-grey: #d0d0d0;
+  --dark-grey: #303030;
+
+  /* sizes */
+  --font-base: 18px;
+  --small-font: 0.8em;
+  --large-font: 1.2em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-spacing: 0;
+}
+
+button {
+  padding: 0.5em 2em;
+  background-color: var(--secondary-color);
+  color: white;
+  margin: 5px;
+  border: 0;
+  border-radius: 10px;
+  font-size: var(--large-font);
+}
+
+.buttons {
+    display: flex;
+}
+
+.sudoku-solver {
+    margin: auto;
+    width: 50%;
+}
+
+.puzzle {
+    width: 540px;
+    height: 540px;
+}
+
+.puzzle input {
+    text-align: center;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    border: 1px #808080 solid;
+}
+
+.puzzle input::-webkit-outer-spin-button,
+.puzzle input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
+.odd-section {
+    background: #d3d3d3;
+}
+
