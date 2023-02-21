@@ -15,7 +15,7 @@
 }
 
 * {
-    margin: 0;
+    /* margin: 0; */
     padding: 0;
     box-sizing: border-box;
     border-spacing: 0;
@@ -38,11 +38,16 @@ button {
 .sudoku-solver {
     margin: auto;
     width: 50%;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    margin-left:-270px;
 }
 
 .puzzle {
     width: 540px;
     height: 540px;
+    min-width: 565px;
 }
 
 .puzzle input {
