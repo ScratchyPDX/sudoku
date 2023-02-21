@@ -1,7 +1,7 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
 import { getRandomInt } from "./utils.js";
 
-export default class boardClient {
+export default class BoardClient {
   
   constructor(playButtonSelector, solveButtonSelector, clearButtonSelector) {
     this.playButton = document.querySelector(playButtonSelector);

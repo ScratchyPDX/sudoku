@@ -1,3 +1,3 @@
-import boardClient from "./boardClient.js";
-const board = new boardClient("#play-button", "#solve-button", "#clear-button");
+import BoardClient from "./boardClient.js";
+const board = new BoardClient("#play-button", "#solve-button", "#clear-button");
 board.init();
