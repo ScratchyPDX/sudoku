@@ -22,7 +22,7 @@ export default class boardClient {
       }) 
     });
 
-    this.solveButton.addEventListener('click', () => {
+    this.solveButton.addEventListener("click", () => {
       this.currentBoardData = getBoardValues();
       getPuzzleSolution(this.initialBoardData).then(response => {
         this.boardSolution = response;
@@ -30,7 +30,7 @@ export default class boardClient {
       })
     });
 
-    this.clearButton.addEventListener('click', () => window.location.reload(true));
+    this.clearButton.addEventListener("click", () => window.location.reload(true));
 
     drawInitialBoard();
   }
