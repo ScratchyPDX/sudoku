@@ -12,7 +12,7 @@ export async function getNewPuzzle(seed, difficulty = "easy") {
     }
   };
   
-  await fetch(`${baseUrl}/generate?seed=${seed}`, options)
+  await fetch(`${baseUrl}/generate?seed=${seed}&difficulty=${difficulty}`, options)
     .then(response => response.json())
     .then(response => boardData = Array.from(response.puzzle.replaceAll(".", " ")))
     .catch(err => console.error(err));
