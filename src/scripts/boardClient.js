@@ -1,5 +1,5 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
-import { getRandomInt } from "./utils.js";
+import { getRandomInt, alertMessage } from "./utils.js";
 
 export default class BoardClient {
   
@@ -10,29 +10,50 @@ export default class BoardClient {
     this.initialBoardData = [];
     this.currentBoardData = [];
     this.boardSolution = [];
+    this.randomSeedNumber = getRandomInt();
   }
 
   init() {
-    this.playButton.addEventListener("click", () => { 
-      this.initialBoardData = getNewPuzzle(getRandomInt()).then(response => {
-        console.log("response: " + response);
-        this.initialBoardData = response;
-        console.log("populateBoard: init: boardData: " + this.initialBoardData);
-        populateValues(this.initialBoardData);
-      }) 
-    });
+    this.playButton.addEventListener("click", () => this.setupBoard()); 
 
-    this.solveButton.addEventListener("click", () => {
-      this.currentBoardData = getBoardValues();
-      getPuzzleSolution(this.initialBoardData).then(response => {
-        this.boardSolution = response;
-        console.log("boardSolution: " + this.boardSolution);
-      })
-    });
+    this.solveButton.addEventListener("click", () => this.getBoardSolution());
 
     this.clearButton.addEventListener("click", () => window.location.reload(true));
 
     drawInitialBoard();
+  }
+
+  async setupBoard() {
+    try {
+      let response = await getNewPuzzle(this.randomSeedNumber);
+      this.initialBoardData = Array.from(response.puzzle.replaceAll(".", " "));
+      console.log("populateBoard: init: boardData: " + this.initialBoardData);
+      populateValues(this.initialBoardData);
+    }
+    catch(err) {
+      console.log(`populateBoard: ${err.name}: ${err.message}`);
+      let errorMessages = JSON.parse(err.message);
+      Object.keys(errorMessages).forEach(key => {
+        alertMessage(errorMessages[key]);
+      });
+    }
+  }
+  
+  async getBoardSolution() {
+    try {
+      this.currentBoardData = getBoardValues();
+      let response = await getPuzzleSolution(this.initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
+      this.boardSolution = response.solution;
+      console.log("boardSolution: " + this.boardSolution);
+      alertMessage(`Solution = ${this.boardSolution}`);
+    }
+    catch(err) {
+      console.log(`populateBoard: ${err.name}: ${err.message}`);
+      let errorMessages = JSON.parse(err.message);
+      Object.keys(errorMessages).forEach(key => {
+        alertMessage(errorMessages[key]);
+      });
+    }
   }
 }
 
@@ -60,7 +81,7 @@ export function drawInitialBoard() {
 function populateValues(boardData) {
   console.log("populateBoard");
   console.log("populateBoard: boardData: " + boardData);
-  const inputs = document.querySelectorAll('input')
+  const inputs = document.querySelectorAll("input")
   inputs.forEach((input, i) => {
     if(boardData[i] != " ") {
       input.value = boardData[i];
