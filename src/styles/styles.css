@@ -95,3 +95,8 @@ button {
   border: none;
   font-size: 25px;
 }
+
+.squareError {
+  background-color: green;
+  color: white;
+}

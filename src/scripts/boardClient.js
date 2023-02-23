@@ -3,9 +3,9 @@ import { getRandomInt, alertMessage } from "./utils.js";
 
 export default class BoardClient {
   
-  constructor(playButtonSelector, solveButtonSelector, clearButtonSelector) {
+  constructor(playButtonSelector, checkButtonSelector, clearButtonSelector) {
     this.playButton = document.querySelector(playButtonSelector);
-    this.solveButton = document.querySelector(solveButtonSelector);
+    this.checkButton = document.querySelector(checkButtonSelector);
     this.clearButton = document.querySelector(clearButtonSelector);
     this.initialBoardData = [];
     this.currentBoardData = [];
@@ -16,7 +16,7 @@ export default class BoardClient {
   init() {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
 
-    this.solveButton.addEventListener("click", () => this.getBoardSolution());
+    this.checkButton.addEventListener("click", () => this.getBoardSolution());
 
     this.clearButton.addEventListener("click", () => window.location.reload(true));
 
@@ -25,8 +25,9 @@ export default class BoardClient {
 
   async setupBoard() {
     try {
+      await this.initializeBoard();
       let response = await getNewPuzzle(this.randomSeedNumber);
-      this.initialBoardData = Array.from(response.puzzle.replaceAll(".", " "));
+      this.initialBoardData = Array.from(response.puzzle);
       console.log("populateBoard: init: boardData: " + this.initialBoardData);
       populateValues(this.initialBoardData);
     }
@@ -43,9 +44,9 @@ export default class BoardClient {
     try {
       this.currentBoardData = getBoardValues();
       let response = await getPuzzleSolution(this.initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
-      this.boardSolution = response.solution;
+      this.boardSolution =  Array.from(response.solution.replaceAll(".", " "));
       console.log("boardSolution: " + this.boardSolution);
-      alertMessage(`Solution = ${this.boardSolution}`);
+      compareBoardToSolution(this.currentBoardData, this.boardSolution);
     }
     catch(err) {
       console.log(`populateBoard: ${err.name}: ${err.message}`);
@@ -54,6 +55,17 @@ export default class BoardClient {
         alertMessage(errorMessages[key]);
       });
     }
+  }
+
+  initializeBoard() {
+    this.initialBoardData = [];
+    this.boardSolution = [];
+    this.currentBoardData = [];
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(input => {
+      input.value = "";
+      input.classList.remove("squareError");
+    })
   }
 }
 
@@ -74,7 +86,7 @@ export function drawInitialBoard() {
       if (darkSquare.includes(i)) {
           inputElement.classList.add("odd-section")
       }
-      sudokuBoard.appendChild(inputElement)
+      sudokuBoard.appendChild(inputElement);
   }
 }
 
@@ -101,4 +113,15 @@ function getBoardValues() {
   })
   console.log("getBoardValues: board: " + board);
   return board;
+}
+
+function compareBoardToSolution(currentBoardData, boardSolution) {
+  console.log("compareBoardToSolution: currentBoardData: " + currentBoardData);
+  console.log("compareBoardToSolution: boardSolution: " + boardSolution);
+  const inputs = document.querySelectorAll("input");
+  boardSolution.forEach((correctValue, i) => { 
+    if(currentBoardData[i] != correctValue) {
+      inputs[i].classList.add("squareError");
+    }
+  });
 }
