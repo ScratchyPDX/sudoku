@@ -21,6 +21,33 @@
   border-spacing: 0;
 }
 
+#alert-list {
+  position: sticky;
+  top: 0px;
+}
+#alert-list section {
+  margin: 1px;
+  display: grid;
+  grid-template-columns: 95% 5%;
+}
+
+#alert-list section p {
+  /* align-items: center; */
+  padding-left: 5px;
+  margin: 0;
+  font-size: 1.5rem;
+  height: 2rem;
+  background-color: orange;
+  color: #000;
+}
+
+.alert-button {
+  background-color: orange;
+  color: #000;
+  border: none;
+  font-size: 25px;
+}
+
 button {
   background-color: var(--secondary-color);
   color: white;
@@ -53,8 +80,33 @@ header {
   font-size: var(--large-font);
 }
 
-.left-buttons {
+.left-side {
   display: flex;
+  flex-direction: column;
+}
+
+.left-side h1 {
+  text-align: center;
+}
+
+#left-controls {
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-game {
+  display: grid;
+  grid-template-columns: 10rem 34rem 8rem;
+  position: relative;
+  width: 50%;
+  left: 50%;
+  margin-left: -27rem;
+  min-width: 54rem;
+}
+
+.odd-section {
+  background: #d3d3d3;
 }
 
 .puzzle {
@@ -63,6 +115,12 @@ header {
   left: 50%;
   margin-left: -17rem;
   min-width: 34rem;
+}
+
+.puzzle button {
+  width: 2.4em;
+  padding: 10px;
+  border-radius: 50%;
 }
 
 .puzzle-board {
@@ -85,38 +143,45 @@ header {
   margin: 0;
 }
 
-.odd-section {
-  background: #d3d3d3;
+.right-side {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
 }
 
-#alert-list {
-  position: sticky;
-  top: 0px;
-}
-#alert-list section {
-  margin: 1px;
-  display: grid;
-  grid-template-columns: 95% 5%;
+.right-side h1 {
+  text-align: center;
 }
 
-#alert-list section p {
+#right-controls {
+  margin-left: 10px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.row td {
+  padding: 5px;
+}
+
+#saved-games {
+  /* width: 90%; */
+  font-size: var(--large-font);
+  /* margin: auto; */
   /* align-items: center; */
-  padding-left: 5px;
-  margin: 0;
-  font-size: 1.5rem;
-  height: 2rem;
-  background-color: orange;
-  color: #000;
 }
-
-.alert-button {
-  background-color: orange;
-  color: #000;
-  border: none;
-  font-size: 25px;
+option {
+  width: 100%;
+  padding: 5px;
 }
 
 .square-in-error {
   background-color: green;
   color: white;
+}
+
+table {
+  width: 90%;
+  font-size: var(--large-font);
+  margin: auto;
 }

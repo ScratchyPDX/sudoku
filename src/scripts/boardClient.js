@@ -3,10 +3,12 @@ import { getRandomInt, alertMessage } from "./utils.js";
 
 export default class BoardClient {
   
-  constructor(playButtonSelector, checkButtonSelector, clearButtonSelector) {
+  constructor(playButtonSelector, checkButtonSelector, clearButtonSelector, saveButtonSelector, loadButtonSelector) {
     this.playButton = document.querySelector(playButtonSelector);
     this.checkButton = document.querySelector(checkButtonSelector);
-    this.clearButton = document.querySelector(clearButtonSelector);
+    this.resetButton = document.querySelector(clearButtonSelector);
+    this.saveButton = document.querySelector(saveButtonSelector);
+    this.loadButton = document.querySelector(loadButtonSelector);
     this.initialBoardData = [];
     this.currentBoardData = [];
     this.boardSolution = [];
@@ -18,7 +20,7 @@ export default class BoardClient {
 
     this.checkButton.addEventListener("click", () => this.getBoardSolution());
 
-    this.clearButton.addEventListener("click", () => window.location.reload(true));
+    this.resetButton.addEventListener("click", () => window.location.reload(true));
 
     drawInitialBoard();
   }

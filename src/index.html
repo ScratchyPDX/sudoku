@@ -14,13 +14,59 @@
     </header>
     <main>
       <div id="alert-list"></div>
-      <div class="puzzle">
-        <div id="puzzle-board" class="puzzle-board"></div>
-        <div class="left-buttons">
-          <button type="button" id="play-button" class="play-button">Play</button>
-          <button type="button" id="check-button" class="check-button">Check</button>
-          <button type="button" id="clear-button" class="clear-button">Clear</button>
-        </div>
+      <div id="main-game">
+        <section class="left-side" id="left-side">
+          <div>
+            <h1>Statistics</h1>
+            <table>
+            <tr class="row" id="games-played">
+              <td>Played</td>
+              <td>9</td>
+            </tr>
+            <tr class="row" id="games-completed">
+              <td>Completed</td>
+              <td>9</td>
+            </tr>
+            <tr class="row" id="games-finish-percentage">
+              <td>Finish %</td>
+              <td>9</td>
+            </tr>
+          </table>
+          </div>
+          <div id="left-controls">
+            <button type="button" id="play-button" class="play-button">Play</button>
+            <button type="button" id="check-button" class="check-button">Check</button>
+            <button type="button" id="reset-button" class="reset-button">Reset</button>
+            <button type="button" id="save-button" class="save-button">Save</button>
+          </div>
+        </section>
+        <section class="puzzle" id="puzzle-central">
+          <div id="puzzle-board" class="puzzle-board"></div>
+          <button type="button" id="one-button">1</button>
+          <button type="button" id="two-button">2</button>
+          <button type="button" id="three-button">3</button>
+          <button type="button" id="four-button">4</button>
+          <button type="button" id="five-button">5</button>
+          <button type="button" id="six-button">6</button>
+          <button type="button" id="seven-button">7</button>
+          <button type="button" id="eight-button">8</button>
+          <button type="button" id="nine-button">9</button>
+        </section>
+        <section class="right-side" id="right-side">
+          <div>
+            <h1>Saved Games</h1>
+            <select name="saved-games" id="saved-games" size="5">
+              <option value="game1">Game 1 Date</option>
+              <option value="game2">Game 2 Date</option>
+              <option value="game3">Game 3 Date</option>
+              <option value="game4">Game 4 Date</option>
+              <option value="game5">Game 5 Date</option>
+            </select>
+          </div>
+          <div id="right-controls">
+            <button type="button" id="load-button" class="load-button">Load</button>
+          </div>
+        </section>
       </div>
     </main>
     <footer>
