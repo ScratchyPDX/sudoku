@@ -62,7 +62,6 @@ button {
 footer {
   background-color: var(--light-grey); 
   border: 1px solid rgba(0, 0, 0, 0.2);
-  width: 50%;
 }
 
 footer p {
@@ -113,6 +112,10 @@ header {
 
 .odd-section {
   background: var(--light-grey);
+}
+
+picture img {
+  height: 9rem;
 }
 
 .puzzle {
@@ -194,4 +197,8 @@ table {
   /* width: 90%; */
   font-size: var(--large-font);
   margin: auto;
+}
+
+picture img {
+  height: 10rem;
 }
