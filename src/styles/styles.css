@@ -15,58 +15,78 @@
 }
 
 * {
-    /* margin: 0; */
-    padding: 0;
-    box-sizing: border-box;
-    border-spacing: 0;
+  /* margin: 0; */
+  padding: 0;
+  box-sizing: border-box;
+  border-spacing: 0;
 }
 
 button {
-  padding: 0.5em 2em;
   background-color: var(--secondary-color);
   color: white;
+  width: 5em;
   margin: 5px;
+  padding: 7px;
+  font-size: var(--large-font);
   border: 0;
-  border-radius: 10px;
+  border-radius: 5px;
+}
+
+footer p {
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  font-size: var(--font-base);
+}
+
+footer,
+header {
+  background-color: var(--tertiary-color);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 5px auto;
+}
+
+header {
   font-size: var(--large-font);
 }
 
-.buttons {
-    display: flex;
-}
-
-.sudoku-solver {
-    margin: auto;
-    width: 50%;
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    margin-left:-270px;
+.left-buttons {
+  display: flex;
 }
 
 .puzzle {
-    width: 540px;
-    height: 540px;
-    min-width: 565px;
+  position: relative;
+  width: 50%;
+  left: 50%;
+  margin-left: -17rem;
+  min-width: 34rem;
 }
 
-.puzzle input {
-    text-align: center;
-    font-size: 30px;
-    width: 60px;
-    height: 60px;
-    border: 1px #808080 solid;
+.puzzle-board {
+  width: 15rem;
+  min-width: 35rem;
 }
 
-.puzzle input::-webkit-outer-spin-button,
-.puzzle input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; 
+.puzzle-board input {
+  text-align: center;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  border: 1px #808080 solid;
+}
+
+.puzzle-board input::-webkit-outer-spin-button,
+.puzzle-board input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .odd-section {
-    background: #d3d3d3;
+  background: #d3d3d3;
 }
 
 #alert-list {
@@ -96,7 +116,7 @@ button {
   font-size: 25px;
 }
 
-.squareError {
+.square-in-error {
   background-color: green;
   color: white;
 }

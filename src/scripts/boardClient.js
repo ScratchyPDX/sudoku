@@ -64,13 +64,13 @@ export default class BoardClient {
     const inputs = document.querySelectorAll("input");
     inputs.forEach(input => {
       input.value = "";
-      input.classList.remove("squareError");
+      input.classList.remove("square-in-error");
     })
   }
 }
 
 export function drawInitialBoard() {
-  const sudokuBoard = document.querySelector("#puzzle")
+  const sudokuBoard = document.querySelector("#puzzle-board")
   const squares = 81
   const darkSquare = [0,1,2,6,7,8,9,10,11,15,16,17,18,
       19,20,24,25,26,30,31,32,39,40,41,48,49,50,54,55,
@@ -121,7 +121,7 @@ function compareBoardToSolution(currentBoardData, boardSolution) {
   const inputs = document.querySelectorAll("input");
   boardSolution.forEach((correctValue, i) => { 
     if(currentBoardData[i] != correctValue) {
-      inputs[i].classList.add("squareError");
+      inputs[i].classList.add("square-in-error");
     }
   });
 }
