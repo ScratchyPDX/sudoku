@@ -49,14 +49,19 @@
 }
 
 button {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+  background-color: var(--alert-color);
+  color: black;
   width: 5em;
   margin: 5px;
   padding: 7px;
   font-size: var(--large-font);
   border: 0;
   border-radius: 5px;
+}
+
+footer {
+  background-color: var(--light-grey); 
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 footer p {
@@ -67,12 +72,10 @@ footer p {
 
 footer,
 header {
-  background-color: var(--tertiary-color);
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.2);
   margin: 5px auto;
 }
 
@@ -83,6 +86,8 @@ header {
 .left-side {
   display: flex;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: 5px;
 }
 
 .left-side h1 {
@@ -146,7 +151,8 @@ header {
 .right-side {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 5px;
+  margin-right: auto;
 }
 
 .right-side h1 {
@@ -165,14 +171,17 @@ header {
 }
 
 #saved-games {
-  /* width: 90%; */
   font-size: var(--large-font);
-  /* margin: auto; */
-  /* align-items: center; */
 }
+
 option {
   width: 100%;
   padding: 5px;
+}
+
+select {
+  height: 12rem;
+  overflow: hidden;
 }
 
 .square-in-error {
@@ -181,7 +190,7 @@ option {
 }
 
 table {
-  width: 90%;
+  /* width: 90%; */
   font-size: var(--large-font);
   margin: auto;
 }
