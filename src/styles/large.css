@@ -1,0 +1,6 @@
+
+@media only screen and (min-height: 55rem) {
+  picture img {
+    height: 14.5rem;
+  }    
+}

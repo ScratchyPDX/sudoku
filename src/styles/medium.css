@@ -115,7 +115,7 @@ header {
 }
 
 picture img {
-  height: 9rem;
+  height: 8rem;
 }
 
 .puzzle {
@@ -197,8 +197,4 @@ table {
   /* width: 90%; */
   font-size: var(--large-font);
   margin: auto;
-}
-
-picture img {
-  height: 10rem;
 }
