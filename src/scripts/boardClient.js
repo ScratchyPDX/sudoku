@@ -26,7 +26,7 @@ export default class BoardClient {
 
   init() {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
-    this.checkButton.addEventListener("click", () => this.getBoardSolution());
+    this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => window.location.reload(true));
     this.oneButton.addEventListener("click", () => this.putValue(1));
     this.twoButton.addEventListener("click", () => this.putValue(2));
@@ -47,9 +47,11 @@ export default class BoardClient {
   }
 
   async setupBoard() {
-    await this.initializeBoard();
-    let puzzle = await getBoardPuzzle();
+    this.initializeBoard();
+    const puzzle = await getBoardPuzzle();
     this.initialBoardData = Array.from(puzzle);
+    const solution = await getBoardSolution(this.initialBoardData);
+    this.boardSolution = Array.from(solution);
     setBoardData(this.initialBoardData);
   }
   
@@ -64,20 +66,9 @@ export default class BoardClient {
     })
   }
 
-  async getBoardSolution() {
-    try {
-      this.currentBoardData = getBoardData();
-      let response = await getPuzzleSolution(this.initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
-      this.boardSolution =  Array.from(response.solution.replaceAll(".", " "));
-      compareBoardToSolution(this.currentBoardData, this.boardSolution);
-    }
-    catch(err) {
-      // console.log(`getBoardSolution: ${err.name}: ${err.message}`);
-      let errorMessages = JSON.parse(err.message);
-      Object.keys(errorMessages).forEach(key => {
-        alertMessage(errorMessages[key]);
-      });
-    }
+  async checkBoardSolution() {
+    this.currentBoardData = getCurrentBoardData();
+    compareBoardToSolution(this.currentBoardData, this.boardSolution);
   }
 
   drawBoard() {
@@ -126,7 +117,21 @@ async function getBoardPuzzle() {
   }
 }
 
-function getBoardData() {
+async function getBoardSolution(initialBoardData) {
+  try {
+    let response = await getPuzzleSolution(initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
+    return  Array.from(response.solution);
+  }
+  catch(err) {
+    // console.log(`getBoardSolution: ${err.name}: ${err.message}`);
+    let errorMessages = JSON.parse(err.message);
+    Object.keys(errorMessages).forEach(key => {
+      alertMessage(errorMessages[key]);
+    });
+  }
+}
+
+function getCurrentBoardData() {
   let board = [];
   const inputs = document.querySelectorAll("input")
   inputs.forEach((input) => {
