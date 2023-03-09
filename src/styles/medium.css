@@ -145,6 +145,7 @@ picture img {
   border: 1px var(--dark-grey) solid;
 }
 
+/* removes number spinner from numeric fields */
 .puzzle-board input::-webkit-outer-spin-button,
 .puzzle-board input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
