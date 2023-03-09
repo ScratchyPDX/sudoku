@@ -21,7 +21,6 @@ export default class BoardClient {
     this.initialBoardData = [];
     this.currentBoardData = [];
     this.boardSolution = [];
-    this.randomSeedNumber = getRandomInt();
     this.selectedField = {};
   }
 
@@ -29,17 +28,17 @@ export default class BoardClient {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
     this.checkButton.addEventListener("click", () => this.getBoardSolution());
     this.resetButton.addEventListener("click", () => window.location.reload(true));
-    this.oneButton.addEventListener('click', () => this.putValue(1));
-    this.twoButton.addEventListener('click', () => this.putValue(2));
-    this.threeButton.addEventListener('click', () => this.putValue(3));
-    this.fourButton.addEventListener('click', () => this.putValue(4));
-    this.fiveButton.addEventListener('click', () => this.putValue(5));
-    this.sixButton.addEventListener('click', () => this.putValue(6));
-    this.sevenButton.addEventListener('click', () => this.putValue(7));
-    this.eightButton.addEventListener('click', () => this.putValue(8));
-    this.nineButton.addEventListener('click', () => this.putValue(9));
+    this.oneButton.addEventListener("click", () => this.putValue(1));
+    this.twoButton.addEventListener("click", () => this.putValue(2));
+    this.threeButton.addEventListener("click", () => this.putValue(3));
+    this.fourButton.addEventListener("click", () => this.putValue(4));
+    this.fiveButton.addEventListener("click", () => this.putValue(5));
+    this.sixButton.addEventListener("click", () => this.putValue(6));
+    this.sevenButton.addEventListener("click", () => this.putValue(7));
+    this.eightButton.addEventListener("click", () => this.putValue(8));
+    this.nineButton.addEventListener("click", () => this.putValue(9));
 
-    this.drawInitialBoard();
+    this.drawBoard();
   }
 
   putValue(value) {
@@ -48,39 +47,12 @@ export default class BoardClient {
   }
 
   async setupBoard() {
-    try {
-      await this.initializeBoard();
-      let response = await getNewPuzzle(this.randomSeedNumber);
-      this.initialBoardData = Array.from(response.puzzle);
-      console.log("populateBoard: init: boardData: " + this.initialBoardData);
-      populateValues(this.initialBoardData);
-    }
-    catch(err) {
-      console.log(`populateBoard: ${err.name}: ${err.message}`);
-      let errorMessages = JSON.parse(err.message);
-      Object.keys(errorMessages).forEach(key => {
-        alertMessage(errorMessages[key]);
-      });
-    }
+    await this.initializeBoard();
+    let puzzle = await getBoardPuzzle();
+    this.initialBoardData = Array.from(puzzle);
+    setBoardData(this.initialBoardData);
   }
   
-  async getBoardSolution() {
-    try {
-      this.currentBoardData = getBoardValues();
-      let response = await getPuzzleSolution(this.initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
-      this.boardSolution =  Array.from(response.solution.replaceAll(".", " "));
-      console.log("boardSolution: " + this.boardSolution);
-      compareBoardToSolution(this.currentBoardData, this.boardSolution);
-    }
-    catch(err) {
-      console.log(`populateBoard: ${err.name}: ${err.message}`);
-      let errorMessages = JSON.parse(err.message);
-      Object.keys(errorMessages).forEach(key => {
-        alertMessage(errorMessages[key]);
-      });
-    }
-  }
-
   initializeBoard() {
     this.initialBoardData = [];
     this.boardSolution = [];
@@ -92,7 +64,23 @@ export default class BoardClient {
     })
   }
 
-  drawInitialBoard() {
+  async getBoardSolution() {
+    try {
+      this.currentBoardData = getBoardData();
+      let response = await getPuzzleSolution(this.initialBoardData.toString().replaceAll(",", "").replaceAll(" ", "."));
+      this.boardSolution =  Array.from(response.solution.replaceAll(".", " "));
+      compareBoardToSolution(this.currentBoardData, this.boardSolution);
+    }
+    catch(err) {
+      // console.log(`getBoardSolution: ${err.name}: ${err.message}`);
+      let errorMessages = JSON.parse(err.message);
+      Object.keys(errorMessages).forEach(key => {
+        alertMessage(errorMessages[key]);
+      });
+    }
+  }
+
+  drawBoard() {
     const sudokuBoard = document.querySelector("#puzzle-board")
     const squares = 81
     const darkSquare = [0,1,2,6,7,8,9,10,11,15,16,17,18,
@@ -106,10 +94,7 @@ export default class BoardClient {
         inputElement.setAttribute("oninput", "this.value=this.value.slice(0,this.maxLength)")
         inputElement.setAttribute("onkeyup", "if(value<1) value='';")
         inputElement.id = `f${i}`;
-        inputElement.addEventListener("click", () => {
-          console.log("elem.id: " + inputElement.id);
-          this.selectedField = inputElement.id;
-        });        
+        inputElement.addEventListener("click", () => {this.selectedField = inputElement.id});        
         if (darkSquare.includes(i)) {
             inputElement.classList.add("odd-section")
         }
@@ -118,9 +103,7 @@ export default class BoardClient {
   }
 }
 
-function populateValues(boardData) {
-  console.log("populateBoard");
-  console.log("populateBoard: boardData: " + boardData);
+function setBoardData(boardData) {
   const inputs = document.querySelectorAll("input")
   inputs.forEach((input, i) => {
     if(boardData[i] != " ") {
@@ -129,7 +112,21 @@ function populateValues(boardData) {
   });
 }  
 
-function getBoardValues() {
+async function getBoardPuzzle() {
+  try {
+    let response = await getNewPuzzle(getRandomInt());
+    return response.puzzle;
+  }
+  catch(err) {
+    // console.log(`getBoardPuzzle: ${err.name}: ${err.message}`);
+    let errorMessages = JSON.parse(err.message);
+    Object.keys(errorMessages).forEach(key => {
+      alertMessage(errorMessages[key]);
+    });
+  }
+}
+
+function getBoardData() {
   let board = [];
   const inputs = document.querySelectorAll("input")
   inputs.forEach((input) => {
@@ -139,13 +136,10 @@ function getBoardValues() {
         board.push("."); 
       }
   })
-  console.log("getBoardValues: board: " + board);
   return board;
 }
 
 function compareBoardToSolution(currentBoardData, boardSolution) {
-  console.log("compareBoardToSolution: currentBoardData: " + currentBoardData);
-  console.log("compareBoardToSolution: boardSolution: " + boardSolution);
   const inputs = document.querySelectorAll("input");
   boardSolution.forEach((correctValue, i) => { 
     if(currentBoardData[i] != correctValue) {
