@@ -28,21 +28,17 @@ export default class BoardClient {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
-    this.oneButton.addEventListener("click", () => this.putValue(1));
-    this.twoButton.addEventListener("click", () => this.putValue(2));
-    this.threeButton.addEventListener("click", () => this.putValue(3));
-    this.fourButton.addEventListener("click", () => this.putValue(4));
-    this.fiveButton.addEventListener("click", () => this.putValue(5));
-    this.sixButton.addEventListener("click", () => this.putValue(6));
-    this.sevenButton.addEventListener("click", () => this.putValue(7));
-    this.eightButton.addEventListener("click", () => this.putValue(8));
-    this.nineButton.addEventListener("click", () => this.putValue(9));
+    this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
+    this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
+    this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
+    this.fourButton.addEventListener("click", () => putValue(this.selectedField, 4));
+    this.fiveButton.addEventListener("click", () => putValue(this.selectedField, 5));
+    this.sixButton.addEventListener("click", () => putValue(this.selectedField, 6));
+    this.sevenButton.addEventListener("click", () => putValue(this.selectedField, 7));
+    this.eightButton.addEventListener("click", () => putValue(this.selectedField, 8));
+    this.nineButton.addEventListener("click", () => putValue(this.selectedField, 9));
 
     this.drawBoard();
-  }
-
-  putValue(value) {
-   this.selectedField.value = value; 
   }
 
   async setupBoard() {
@@ -116,7 +112,6 @@ async function getBoardPuzzle() {
     return response.puzzle;
   }
   catch(err) {
-    // console.log(`getBoardPuzzle: ${err.name}: ${err.message}`);
     let errorMessages = JSON.parse(err.message);
     Object.keys(errorMessages).forEach(key => {
       alertMessage(errorMessages[key]);
@@ -130,7 +125,6 @@ async function getBoardSolution(initialBoardData) {
     return  Array.from(response.solution);
   }
   catch(err) {
-    // console.log(`getBoardSolution: ${err.name}: ${err.message}`);
     let errorMessages = JSON.parse(err.message);
     Object.keys(errorMessages).forEach(key => {
       alertMessage(errorMessages[key]);
@@ -179,3 +173,8 @@ function resetBoard(boardData) {
     }
   });
 }
+
+function putValue(element, value) {
+ element.value = value; 
+}
+
