@@ -149,8 +149,11 @@ picture img {
 
 
 .puzzle-board input:hover,
-.puzzle-board input.selected {
+.puzzle-board input.selected,
+.puzzle-board input::selection {
   background-color: lightskyblue;
+  background: lightskyblue;
+  cursor: default;
 }
 
 /* removes number spinner from numeric fields */
