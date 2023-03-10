@@ -94,6 +94,7 @@ export default class BoardClient {
     }
     this.selectedField = document.querySelector(`#${elementId}`);
     this.selectedField.classList.add("selected");
+    this.selectedField.select();
   }
 }
 
@@ -177,4 +178,6 @@ function resetBoard(boardData) {
 function putValue(element, value) {
  element.value = value; 
 }
+
+
 
