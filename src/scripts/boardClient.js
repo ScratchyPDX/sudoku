@@ -92,14 +92,14 @@ export default class BoardClient {
     }
   }
 
-    setSelected(elementId) {
-      if(this.selectedField !== undefined) {
-        this.selectedField.classList.remove("selected");
-      }
-      this.selectedField = document.querySelector(`#${elementId}`);
-      this.selectedField.classList.add("selected");
+  setSelected(elementId) {
+    if(this.selectedField !== undefined) {
+      this.selectedField.classList.remove("selected");
     }
+    this.selectedField = document.querySelector(`#${elementId}`);
+    this.selectedField.classList.add("selected");
   }
+}
 
 function setBoardData(boardData) {
   const inputs = document.querySelectorAll("input")
@@ -174,8 +174,8 @@ function compareBoardToSolution(currentBoardData, boardSolution, clearFieldHighl
 function resetBoard(boardData) {
   const inputs = document.querySelectorAll("input");
   inputs.forEach((input, i) => {
-    if(boardData[i] == ".") {
-      input.value = boardData[i];
+    if(boardData[i] === ".") {
+      input.value = "";
     }
   });
 }
