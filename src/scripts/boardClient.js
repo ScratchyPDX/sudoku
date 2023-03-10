@@ -23,6 +23,7 @@ export default class BoardClient {
     this.boardSolution = [];
     this.selectedField = undefined;
     this.boardId = undefined;
+    this.selectElement = document.querySelector("#saved-games")
   }
 
   init() {
@@ -30,7 +31,7 @@ export default class BoardClient {
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
     this.saveButton.addEventListener("click", () => saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId));
-    // this.loadButton.addEventListener("click", () => loadGame());
+    this.loadButton.addEventListener("click", () => loadGame(this.selectElement));
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -77,20 +78,19 @@ export default class BoardClient {
         56,60,61,62,63,64,65,69,70,71,72,73,74,78,79,80];
   
     for (let i = 0; i < squares; i++) {
-        const inputElement = document.createElement("input")
-        inputElement.setAttribute("type", "number")
-        inputElement.setAttribute("maxlength", "1")
-        inputElement.setAttribute("oninput", "this.value=this.value.slice(0,this.maxLength)")
-        inputElement.setAttribute("onkeyup", "if(value<1) value='';")
-        inputElement.id = `f${i}`;
-        inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
-        if (darkSquare.includes(i)) {
-            inputElement.classList.add("odd-section")
-        }
-        sudokuBoard.appendChild(inputElement);
+      const inputElement = document.createElement("input")
+      inputElement.setAttribute("type", "number")
+      inputElement.setAttribute("maxlength", "1")
+      inputElement.setAttribute("oninput", "this.value=this.value.slice(0,this.maxLength)")
+      inputElement.setAttribute("onkeyup", "if(value<1) value='';")
+      inputElement.id = `f${i}`;
+      inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
+      if (darkSquare.includes(i)) {
+          inputElement.classList.add("odd-section")
+      }
+      sudokuBoard.appendChild(inputElement);
     }
-    const savedGamesSelectElement = document.querySelector("#saved-games");
-    loadGames(savedGamesSelectElement);
+    loadGames(this.selectElement);
   }
 
   setSelected(elementId) {
@@ -142,11 +142,11 @@ function getCurrentBoardData() {
   let board = [];
   const inputs = document.querySelectorAll("input")
   inputs.forEach((input) => {
-      if(input.value) {
-          board.push(input.value); 
-      } else {
-        board.push("."); 
-      }
+    if(input.value) {
+        board.push(input.value); 
+    } else {
+      board.push("."); 
+    }
   })
   return board;
 }
@@ -205,5 +205,10 @@ function loadGames(selectElement) {
       selectElement.add(optionElement);
     });
   }
+}
+
+function loadGame(selectElement) {
+  console.log("loadGame: value: " + selectElement.value);
+  console.log("loadGame: option text: " + selectElement.options[selectElement.selectedIndex].text);
 }
 
