@@ -27,7 +27,7 @@ export default class BoardClient {
   init() {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
-    this.resetButton.addEventListener("click", () => window.location.reload(true));
+    this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
     this.oneButton.addEventListener("click", () => this.putValue(1));
     this.twoButton.addEventListener("click", () => this.putValue(2));
     this.threeButton.addEventListener("click", () => this.putValue(3));
@@ -61,13 +61,13 @@ export default class BoardClient {
     const inputs = document.querySelectorAll("input");
     inputs.forEach(input => {
       input.value = "";
-      input.classList.remove("square-in-error");
     })
   }
 
   async checkBoardSolution() {
     this.currentBoardData = getCurrentBoardData();
     compareBoardToSolution(this.currentBoardData, this.boardSolution);
+    setTimeout(function() {compareBoardToSolution(this.currentBoardData, this.boardSolution, true);}, 2000);
   }
 
   drawBoard() {
@@ -104,7 +104,7 @@ export default class BoardClient {
 function setBoardData(boardData) {
   const inputs = document.querySelectorAll("input")
   inputs.forEach((input, i) => {
-    if(boardData[i] != " ") {
+    if(boardData[i] != ".") {
       input.value = boardData[i];
     }
   });
@@ -151,11 +151,31 @@ function getCurrentBoardData() {
   return board;
 }
 
-function compareBoardToSolution(currentBoardData, boardSolution) {
+function compareBoardToSolution(currentBoardData, boardSolution, clearFieldHighlight = false) {
   const inputs = document.querySelectorAll("input");
-  boardSolution.forEach((correctValue, i) => { 
-    if(currentBoardData[i] != correctValue) {
-      inputs[i].classList.add("square-in-error");
+  if(clearFieldHighlight) {
+    inputs.forEach((input) => { 
+      input.classList.remove("square-in-error");
+      input.classList.remove("square-is-correct");
+    });
+  }
+  else {
+    boardSolution.forEach((correctValue, i) => { 
+      if(currentBoardData[i] != correctValue) {
+        inputs[i].classList.add("square-in-error");
+      }
+      else {
+        inputs[i].classList.add("square-is-correct");
+      }
+    });
+  }
+}
+
+function resetBoard(boardData) {
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input, i) => {
+    if(boardData[i] == ".") {
+      input.value = boardData[i];
     }
   });
 }

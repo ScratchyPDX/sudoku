@@ -201,6 +201,10 @@ select {
   background-color: lightcoral;
 }
 
+.square-is-correct {
+  background-color: lightgreen;
+}
+
 table {
   /* width: 90%; */
   font-size: var(--large-font);
