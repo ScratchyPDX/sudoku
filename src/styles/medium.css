@@ -188,6 +188,7 @@ picture img {
 
 #saved-games {
   font-size: var(--large-font);
+  width: 8rem;
 }
 
 option {

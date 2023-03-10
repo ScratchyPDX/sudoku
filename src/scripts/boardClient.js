@@ -30,6 +30,7 @@ export default class BoardClient {
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
     this.saveButton.addEventListener("click", () => saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId));
+    // this.loadButton.addEventListener("click", () => loadGame());
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -88,6 +89,8 @@ export default class BoardClient {
         }
         sudokuBoard.appendChild(inputElement);
     }
+    const savedGamesSelectElement = document.querySelector("#saved-games");
+    loadGames(savedGamesSelectElement);
   }
 
   setSelected(elementId) {
@@ -190,5 +193,17 @@ function saveGame(initial, current, solution, id) {
   const savedGame = { id: boardId, initial: initial, current: current, solution: solution };
   savedGames.push(savedGame);
   setLocalStorage("saved-games", savedGames);
+}
+
+function loadGames(selectElement) {
+  const savedGames = getLocalStorage("saved-games");
+  if(savedGames !== null) {
+    savedGames.forEach((savedGame, i) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = savedGame.id;
+      optionElement.text = `Game ${i + 1}`;
+      selectElement.add(optionElement);
+    });
+  }
 }
 
