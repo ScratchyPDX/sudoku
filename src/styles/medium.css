@@ -140,9 +140,17 @@ picture img {
 .puzzle-board input {
   text-align: center;
   font-size: 30px;
+  font-weight: bolder;
   width: 60px;
   height: 60px;
   border: 1px var(--dark-grey) solid;
+  caret-color: transparent;
+}
+
+
+.puzzle-board input:hover,
+.puzzle-board input.selected {
+  background-color: lightskyblue;
 }
 
 /* removes number spinner from numeric fields */
@@ -190,8 +198,7 @@ select {
 }
 
 .square-in-error {
-  background-color: green;
-  color: white;
+  background-color: lightcoral;
 }
 
 table {

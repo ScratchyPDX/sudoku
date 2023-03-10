@@ -21,7 +21,7 @@ export default class BoardClient {
     this.initialBoardData = [];
     this.currentBoardData = [];
     this.boardSolution = [];
-    this.selectedField = {};
+    this.selectedField = undefined;
   }
 
   init() {
@@ -42,8 +42,7 @@ export default class BoardClient {
   }
 
   putValue(value) {
-    let field = document.querySelector(`#${this.selectedField}`);
-    field.value = value; 
+   this.selectedField.value = value; 
   }
 
   async setupBoard() {
@@ -85,14 +84,22 @@ export default class BoardClient {
         inputElement.setAttribute("oninput", "this.value=this.value.slice(0,this.maxLength)")
         inputElement.setAttribute("onkeyup", "if(value<1) value='';")
         inputElement.id = `f${i}`;
-        inputElement.addEventListener("click", () => {this.selectedField = inputElement.id});        
+        inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
         if (darkSquare.includes(i)) {
             inputElement.classList.add("odd-section")
         }
         sudokuBoard.appendChild(inputElement);
     }
   }
-}
+
+    setSelected(elementId) {
+      if(this.selectedField !== undefined) {
+        this.selectedField.classList.remove("selected");
+      }
+      this.selectedField = document.querySelector(`#${elementId}`);
+      this.selectedField.classList.add("selected");
+    }
+  }
 
 function setBoardData(boardData) {
   const inputs = document.querySelectorAll("input")
