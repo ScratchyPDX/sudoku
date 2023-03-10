@@ -1,5 +1,5 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
-import { getRandomInt, alertMessage } from "./utils.js";
+import { getRandomInt, alertMessage, generateGUID, getLocalStorage, setLocalStorage } from "./utils.js";
 
 export default class BoardClient {
   
@@ -22,12 +22,14 @@ export default class BoardClient {
     this.currentBoardData = [];
     this.boardSolution = [];
     this.selectedField = undefined;
+    this.boardId = undefined;
   }
 
   init() {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
+    this.saveButton.addEventListener("click", () => saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId));
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -179,5 +181,14 @@ function putValue(element, value) {
  element.value = value; 
 }
 
-
+function saveGame(initial, current, solution, id) {
+  let savedGames = getLocalStorage("saved-games");
+  if(savedGames === null) {
+    savedGames = [];
+  }
+  const boardId = (id !== undefined) ? id : generateGUID();
+  const savedGame = { id: boardId, initial: initial, current: current, solution: solution };
+  savedGames.push(savedGame);
+  setLocalStorage("saved-games", savedGames);
+}
 
