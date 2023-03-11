@@ -1,5 +1,5 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
-import { getRandomInt, alertMessage, generateGUID, getLocalStorage, setLocalStorage } from "./utils.js";
+import { getRandomInt, alertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
 
 export default class BoardClient {
   
@@ -30,8 +30,8 @@ export default class BoardClient {
     this.playButton.addEventListener("click", () => this.setupBoard()); 
     this.checkButton.addEventListener("click", () => this.checkBoardSolution());
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
-    this.saveButton.addEventListener("click", () => saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId));
-    this.loadButton.addEventListener("click", () => loadGame(this.selectElement));
+    this.saveButton.addEventListener("click", () => this.save());
+    this.loadButton.addEventListener("click", () => this.load());
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -43,6 +43,19 @@ export default class BoardClient {
     this.nineButton.addEventListener("click", () => putValue(this.selectedField, 9));
 
     this.drawBoard();
+  }
+
+  save() {
+    saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId);
+    getSavedGames(this.selectElement);
+  }
+
+  load() {
+    const savedGame = loadGame(this.selectElement);
+    this.initialBoardData = savedGame.initial;
+    this.currentBoardData = savedGame.current;
+    this.boardSolution = savedGame.solution;
+    resetBoard(this.currentBoardData);
   }
 
   async setupBoard() {
@@ -90,7 +103,7 @@ export default class BoardClient {
       }
       sudokuBoard.appendChild(inputElement);
     }
-    loadGames(this.selectElement);
+    getSavedGames(this.selectElement);
   }
 
   setSelected(elementId) {
@@ -177,6 +190,9 @@ function resetBoard(boardData) {
     if(boardData[i] === ".") {
       input.value = "";
     }
+    else {
+      input.value = boardData[i];
+    }
   });
 }
 
@@ -189,14 +205,15 @@ function saveGame(initial, current, solution, id) {
   if(savedGames === null) {
     savedGames = [];
   }
-  const boardId = (id !== undefined) ? id : generateGUID();
-  const savedGame = { id: boardId, initial: initial, current: current, solution: solution };
+
+  const savedGame = { initial: initial, current: current, solution: solution };
   savedGames.push(savedGame);
   setLocalStorage("saved-games", savedGames);
 }
 
-function loadGames(selectElement) {
+function getSavedGames(selectElement) {
   const savedGames = getLocalStorage("saved-games");
+  selectElement.options.length = 0;
   if(savedGames !== null) {
     savedGames.forEach((savedGame, i) => {
       const optionElement = document.createElement("option");
@@ -208,7 +225,7 @@ function loadGames(selectElement) {
 }
 
 function loadGame(selectElement) {
-  console.log("loadGame: value: " + selectElement.value);
-  console.log("loadGame: option text: " + selectElement.options[selectElement.selectedIndex].text);
+  const savedGames = getLocalStorage("saved-games");
+  return savedGames[selectElement.selectedIndex];
 }
 
