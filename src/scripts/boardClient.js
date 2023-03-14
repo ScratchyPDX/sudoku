@@ -110,11 +110,11 @@ export default class BoardClient {
     console.log("changed");
     if(element.value < 1) { element.value = ""; }
     element.value = element.value.slice(0, MAX_LENGTH);
-    this.currentBoardData = getCurrentBoardData();
-    console.log("currentBoardData: " + this.currentBoardData);
-    if(!this.currentBoardData.includes(".")) {
-      this.checkBoardSolution()
-    }
+    // this.currentBoardData = getCurrentBoardData();
+    // console.log("currentBoardData: " + this.currentBoardData);
+    // if(!this.currentBoardData.includes(".")) {
+    //   this.checkBoardSolution()
+    // }
   }
 
   setSelected(elementId) {
