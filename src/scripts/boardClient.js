@@ -1,6 +1,8 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
 import { getRandomInt, alertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
 
+const MAX_LENGTH = 1;
+
 export default class BoardClient {
   
   constructor(playButtonSelector, checkButtonSelector, clearButtonSelector, saveButtonSelector, loadButtonSelector) {
@@ -80,7 +82,7 @@ export default class BoardClient {
   async checkBoardSolution() {
     this.currentBoardData = getCurrentBoardData();
     compareBoardToSolution(this.currentBoardData, this.boardSolution);
-    setTimeout(function() {compareBoardToSolution(this.currentBoardData, this.boardSolution, true);}, 2000);
+    setTimeout(function() {clearFieldHighlights();}, 2000);
   }
 
   drawBoard() {
@@ -91,19 +93,28 @@ export default class BoardClient {
         56,60,61,62,63,64,65,69,70,71,72,73,74,78,79,80];
   
     for (let i = 0; i < squares; i++) {
-      const inputElement = document.createElement("input")
-      inputElement.setAttribute("type", "number")
-      inputElement.setAttribute("maxlength", "1")
-      inputElement.setAttribute("oninput", "this.value=this.value.slice(0,this.maxLength)")
-      inputElement.setAttribute("onkeyup", "if(value<1) value='';")
+      const inputElement = document.createElement("input");
+      inputElement.setAttribute("type", "number");
       inputElement.id = `f${i}`;
       inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
+      inputElement.addEventListener("keyup", () => {this.checkInput(inputElement)});        
       if (darkSquare.includes(i)) {
           inputElement.classList.add("odd-section")
       }
       sudokuBoard.appendChild(inputElement);
     }
     getSavedGames(this.selectElement);
+  }
+
+  checkInput(element) {
+    console.log("changed");
+    if(element.value < 1) { element.value = ""; }
+    element.value = element.value.slice(0, MAX_LENGTH);
+    this.currentBoardData = getCurrentBoardData();
+    console.log("currentBoardData: " + this.currentBoardData);
+    if(!this.currentBoardData.includes(".")) {
+      this.checkBoardSolution()
+    }
   }
 
   setSelected(elementId) {
@@ -164,24 +175,24 @@ function getCurrentBoardData() {
   return board;
 }
 
-function compareBoardToSolution(currentBoardData, boardSolution, clearFieldHighlight = false) {
+function clearFieldHighlights() {
   const inputs = document.querySelectorAll("input");
-  if(clearFieldHighlight) {
-    inputs.forEach((input) => { 
-      input.classList.remove("square-in-error");
-      input.classList.remove("square-is-correct");
-    });
-  }
-  else {
-    boardSolution.forEach((correctValue, i) => { 
-      if(currentBoardData[i] != correctValue) {
-        inputs[i].classList.add("square-in-error");
-      }
-      else {
-        inputs[i].classList.add("square-is-correct");
-      }
-    });
-  }
+  inputs.forEach((input) => { 
+    input.classList.remove("square-in-error");
+    input.classList.remove("square-is-correct");
+  });
+}
+
+function compareBoardToSolution(currentBoardData, boardSolution) {
+  const inputs = document.querySelectorAll("input");
+  boardSolution.forEach((correctValue, i) => { 
+    if(currentBoardData[i] != correctValue) {
+      inputs[i].classList.add("square-in-error");
+    }
+    else {
+      inputs[i].classList.add("square-is-correct");
+    }
+  });
 }
 
 function resetBoard(boardData) {
@@ -200,7 +211,7 @@ function putValue(element, value) {
  element.value = value; 
 }
 
-function saveGame(initial, current, solution, id) {
+function saveGame(initial, current, solution) {
   let savedGames = getLocalStorage("saved-games");
   if(savedGames === null) {
     savedGames = [];
