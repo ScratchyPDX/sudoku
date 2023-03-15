@@ -5,12 +5,13 @@ const MAX_LENGTH = 1;
 
 export default class BoardClient {
   
-  constructor(playButtonSelector, checkButtonSelector, clearButtonSelector, saveButtonSelector, loadButtonSelector) {
+  constructor(playButtonSelector, checkButtonSelector, clearButtonSelector, saveButtonSelector, loadButtonSelector, deleteButtonSelector) {
     this.playButton = document.querySelector(playButtonSelector);
     this.checkButton = document.querySelector(checkButtonSelector);
     this.resetButton = document.querySelector(clearButtonSelector);
     this.saveButton = document.querySelector(saveButtonSelector);
     this.loadButton = document.querySelector(loadButtonSelector);
+    this.deleteButton = document.querySelector(deleteButtonSelector);
     this.oneButton = document.querySelector("#one-button");
     this.twoButton = document.querySelector("#two-button");
     this.threeButton = document.querySelector("#three-button");
@@ -34,6 +35,7 @@ export default class BoardClient {
     this.resetButton.addEventListener("click", () => resetBoard(this.initialBoardData));
     this.saveButton.addEventListener("click", () => this.save());
     this.loadButton.addEventListener("click", () => this.load());
+    this.deleteButton.addEventListener("click", () => this.delete());
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -58,6 +60,11 @@ export default class BoardClient {
     this.currentBoardData = savedGame.current;
     this.boardSolution = savedGame.solution;
     resetBoard(this.currentBoardData);
+  }
+
+  delete() {
+    deleteGame(this.selectElement);
+    getSavedGames(this.selectElement);
   }
 
   async setupBoard() {
@@ -240,3 +247,8 @@ function loadGame(selectElement) {
   return savedGames[selectElement.selectedIndex];
 }
 
+function deleteGame(selectElement) {
+  const savedGames = getLocalStorage("saved-games");
+  savedGames.splice(selectElement.selectedIndex, 1);
+  setLocalStorage("saved-games", savedGames);
+}
