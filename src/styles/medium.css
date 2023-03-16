@@ -79,6 +79,10 @@ header {
   margin: 5px auto;
 }
 
+h1, h2 {
+  margin-bottom: 0;
+}
+
 header {
   font-size: var(--large-font);
 }
@@ -90,14 +94,13 @@ header {
   margin-right: 5px;
 }
 
-.left-side h1 {
+#game-timer {
   text-align: center;
 }
 
 #left-controls {
   margin: 5px auto;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
 }
 
 #main-game {
@@ -210,8 +213,3 @@ select {
   background-color: lightgreen;
 }
 
-table {
-  /* width: 90%; */
-  font-size: var(--large-font);
-  margin: auto;
-}

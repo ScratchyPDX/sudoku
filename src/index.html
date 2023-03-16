@@ -22,28 +22,22 @@
       <div id="alert-list"></div>
       <div id="main-game">
         <section class="left-side" id="left-side">
-          <div>
-            <h1>Statistics</h1>
-            <table>
-            <tr class="row" id="games-played">
-              <td>Played</td>
-              <td>9</td>
-            </tr>
-            <tr class="row" id="games-completed">
-              <td>Completed</td>
-              <td>9</td>
-            </tr>
-            <tr class="row" id="games-finish-percentage">
-              <td>Finish %</td>
-              <td>9</td>
-            </tr>
-          </table>
+          <div id="game-timer">
+            <h2>Timer</h2>
+            <label id="minutes">00</label>
+            <label id="colon">:</label>
+            <label id="seconds">00</label>
+            <button type="button" id="pause-button" class="pause-button">Pause</button>
           </div>
           <div id="left-controls">
+            <h2>Skill Level</h2>
+            <input type="radio" id="easy" name="fav_language" value="easy" checked>
+            <label for="easy">Easy</label>
+            <input type="radio" id="medium" name="fav_language" value="medium">
+            <label for="medium">Medium</label>
             <button type="button" id="play-button" class="play-button">Play</button>
             <button type="button" id="check-button" class="check-button">Check</button>
             <button type="button" id="reset-button" class="reset-button">Reset</button>
-            <button type="button" id="save-button" class="save-button">Save</button>
           </div>
         </section>
         <section class="puzzle" id="puzzle-central">
@@ -65,6 +59,7 @@
             </select>
           </div>
           <div id="right-controls">
+            <button type="button" id="save-button" class="save-button">Save</button>
             <button type="button" id="load-button" class="load-button">Load</button>
             <button type="button" id="delete-button" class="delete-button">Delete</button>
           </div>
