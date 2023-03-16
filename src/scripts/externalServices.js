@@ -2,7 +2,7 @@ const baseUrl = "https://sudoku-generator1.p.rapidapi.com/sudoku";
 const apiKey = "af23287987mshc12f3e6f80944bcp117c10jsn6dc87d745977";
 const apiHost = "sudoku-generator1.p.rapidapi.com";
 
-export async function getNewPuzzle(seed, difficulty = "easy") {
+export async function getNewPuzzle(seed, difficulty) {
   const options = buildRequestOptions("GET");
   return await fetch(`${baseUrl}/generate?seed=${seed}&difficulty=${difficulty}`, options).then(convertToJson);
 }

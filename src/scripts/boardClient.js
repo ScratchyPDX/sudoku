@@ -1,5 +1,6 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
 import { getRandomInt, alertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
+import { setTime, pauseTime } from "./timer.js";
 
 const MAX_LENGTH = 1;
 
@@ -12,6 +13,7 @@ export default class BoardClient {
     this.saveButton = document.querySelector(saveButtonSelector);
     this.loadButton = document.querySelector(loadButtonSelector);
     this.deleteButton = document.querySelector(deleteButtonSelector);
+    this.pauseButton = document.querySelector("#pause-button");
     this.oneButton = document.querySelector("#one-button");
     this.twoButton = document.querySelector("#two-button");
     this.threeButton = document.querySelector("#three-button");
@@ -36,6 +38,7 @@ export default class BoardClient {
     this.saveButton.addEventListener("click", () => this.save());
     this.loadButton.addEventListener("click", () => this.load());
     this.deleteButton.addEventListener("click", () => this.delete());
+    this.pauseButton.addEventListener("click", () => pauseTime(this.pauseButton));
     this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
     this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
     this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
@@ -69,11 +72,14 @@ export default class BoardClient {
 
   async setupBoard() {
     this.initializeBoard();
-    const puzzle = await getBoardPuzzle();
+    const difficultyElememt = document.getElementsByName("difficulty");
+    let difficulty = difficultyElememt[0].checked ? "easy" : "medium"
+    const puzzle = await getBoardPuzzle(difficulty);
     this.initialBoardData = Array.from(puzzle);
     const solution = await getBoardSolution(this.initialBoardData);
     this.boardSolution = Array.from(solution);
     setBoardData(this.initialBoardData);
+    setInterval(setTime, 1000);
   }
   
   initializeBoard() {
@@ -102,11 +108,12 @@ export default class BoardClient {
     for (let i = 0; i < squares; i++) {
       const inputElement = document.createElement("input");
       inputElement.setAttribute("type", "number");
+      inputElement.classList.add("puzzle-input")
       inputElement.id = `f${i}`;
       inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
       inputElement.addEventListener("keyup", () => {this.checkInput(inputElement)});        
       if (darkSquare.includes(i)) {
-          inputElement.classList.add("odd-section")
+        inputElement.classList.add("odd-section");
       }
       sudokuBoard.appendChild(inputElement);
     }
@@ -135,7 +142,7 @@ export default class BoardClient {
 }
 
 function setBoardData(boardData) {
-  const inputs = document.querySelectorAll("input")
+  const inputs = document.querySelectorAll(".puzzle-input")
   inputs.forEach((input, i) => {
     if(boardData[i] != ".") {
       input.value = boardData[i];
@@ -143,9 +150,9 @@ function setBoardData(boardData) {
   });
 }  
 
-async function getBoardPuzzle() {
+async function getBoardPuzzle(difficulty) {
   try {
-    let response = await getNewPuzzle(getRandomInt());
+    let response = await getNewPuzzle(getRandomInt(), difficulty);
     return response.puzzle;
   }
   catch(err) {
