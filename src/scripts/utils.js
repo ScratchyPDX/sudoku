@@ -5,13 +5,17 @@ export function getRandomInt() {
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
-export function alertMessage(message) {
+export function alertMessage(message, isErrorAlert) {
     let element = document.querySelector("#alert-list");
     let section = document.createElement("section");
     let p = document.createElement("p");
     p.textContent = message;
     let input = document.createElement("input");
-    input.className = "alert-button";
+    input.classList.add("alert-button");
+    if(isErrorAlert) {
+      p.classList.add("square-in-error");
+      input.classList.add("square-in-error");
+    }
     input.type = "button";
     input.value = "X";
     section.appendChild(p);

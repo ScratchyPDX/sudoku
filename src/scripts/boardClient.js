@@ -39,15 +39,15 @@ export default class BoardClient {
     this.loadButton.addEventListener("click", () => this.load());
     this.deleteButton.addEventListener("click", () => this.delete());
     this.pauseButton.addEventListener("click", () => pauseTime(this.pauseButton));
-    this.oneButton.addEventListener("click", () => putValue(this.selectedField, 1));
-    this.twoButton.addEventListener("click", () => putValue(this.selectedField, 2));
-    this.threeButton.addEventListener("click", () => putValue(this.selectedField, 3));
-    this.fourButton.addEventListener("click", () => putValue(this.selectedField, 4));
-    this.fiveButton.addEventListener("click", () => putValue(this.selectedField, 5));
-    this.sixButton.addEventListener("click", () => putValue(this.selectedField, 6));
-    this.sevenButton.addEventListener("click", () => putValue(this.selectedField, 7));
-    this.eightButton.addEventListener("click", () => putValue(this.selectedField, 8));
-    this.nineButton.addEventListener("click", () => putValue(this.selectedField, 9));
+    this.oneButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 1));
+    this.twoButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 2));
+    this.threeButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 3));
+    this.fourButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 4));
+    this.fiveButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 5));
+    this.sixButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 6));
+    this.sevenButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 7));
+    this.eightButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 8));
+    this.nineButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 9));
 
     this.drawBoard();
   }
@@ -121,14 +121,26 @@ export default class BoardClient {
   }
 
   checkInput(element) {
-    console.log("changed");
     if(element.value < 1) { element.value = ""; }
     element.value = element.value.slice(0, MAX_LENGTH);
-    // this.currentBoardData = getCurrentBoardData();
-    // console.log("currentBoardData: " + this.currentBoardData);
-    // if(!this.currentBoardData.includes(".")) {
-    //   this.checkBoardSolution()
-    // }
+    this.currentBoardData = getCurrentBoardData();
+    if(!this.currentBoardData.includes(".")) {
+      compareBoardToSolution(this.currentBoardData, this.boardSolution);
+      const inputs = document.querySelectorAll(".square-in-error");
+      clearFieldHighlights();
+      if(inputs.length > 0) {
+        alertMessage(`Puzzle has ${inputs.length} error(s)`, true);
+      }
+      else {
+        alertMessage(`Congratulations! You finished the puzzle correctly!`, false);
+        pauseTime(this.pauseButton)
+      }
+    }
+  }
+
+  checkMouseInput(element, number) {
+    putValue(element, number);
+    this.checkInput(element);
   }
 
   setSelected(elementId) {
@@ -193,7 +205,6 @@ function clearFieldHighlights() {
   const inputs = document.querySelectorAll(".puzzle-input");
   inputs.forEach((input) => { 
     input.classList.remove("square-in-error");
-    input.classList.remove("square-is-correct");
   });
 }
 
@@ -202,9 +213,6 @@ function compareBoardToSolution(currentBoardData, boardSolution) {
   boardSolution.forEach((correctValue, i) => { 
     if(currentBoardData[i] != correctValue) {
       inputs[i].classList.add("square-in-error");
-    }
-    else {
-      inputs[i].classList.add("square-is-correct");
     }
   });
 }

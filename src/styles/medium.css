@@ -37,15 +37,21 @@
   margin: 0;
   font-size: 1.5rem;
   height: 2rem;
-  background-color: var( --alert-color);
-  color: var(--dark-grey);
+  background-color: green;
+  color: white;
+}
+
+#alert-list section p.square-in-error {
+  background-color: red;
+  color: white;
 }
 
 .alert-button {
-  background-color: var(--alert-color);
-  color: var(--dark-grey);
+  background-color: green;
+  color: white;
   border: none;
-  font-size: 25px;
+  font-size: 1.5rem;
+  height: 2rem;
 }
 
 button {
@@ -210,10 +216,8 @@ select {
 }
 
 .square-in-error {
-  background-color: lightcoral;
+  background-color: red;
+  color: white;
 }
 
-.square-is-correct {
-  background-color: lightgreen;
-}
 
