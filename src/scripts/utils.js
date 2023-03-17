@@ -5,6 +5,16 @@ export function getRandomInt() {
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
+export function removeAlertMessage() {
+  let element = document.querySelector("#alert-list");
+
+  // remove any existing alerts
+  const originalSection = element.querySelectorAll("section");
+  if(originalSection.length > 0) {
+    element.removeChild(originalSection[0]);
+  }
+}
+
 export function alertMessage(message, isErrorAlert) {
     let element = document.querySelector("#alert-list");
     let section = document.createElement("section");

@@ -1,5 +1,5 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
-import { getRandomInt, alertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
+import { getRandomInt, alertMessage, removeAlertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
 import { setTime, pauseTime } from "./timer.js";
 
 const MAX_LENGTH = 1;
@@ -123,6 +123,7 @@ export default class BoardClient {
   checkInput(element) {
     if(element.value < 1) { element.value = ""; }
     element.value = element.value.slice(0, MAX_LENGTH);
+    removeAlertMessage()
     this.currentBoardData = getCurrentBoardData();
     if(!this.currentBoardData.includes(".")) {
       compareBoardToSolution(this.currentBoardData, this.boardSolution);
