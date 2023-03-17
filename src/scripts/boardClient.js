@@ -178,7 +178,7 @@ async function getBoardSolution(initialBoardData) {
 
 function getCurrentBoardData() {
   let board = [];
-  const inputs = document.querySelectorAll("input")
+  const inputs = document.querySelectorAll(".puzzle-input")
   inputs.forEach((input) => {
     if(input.value) {
         board.push(input.value); 
@@ -190,7 +190,7 @@ function getCurrentBoardData() {
 }
 
 function clearFieldHighlights() {
-  const inputs = document.querySelectorAll("input");
+  const inputs = document.querySelectorAll(".puzzle-input");
   inputs.forEach((input) => { 
     input.classList.remove("square-in-error");
     input.classList.remove("square-is-correct");
@@ -198,7 +198,7 @@ function clearFieldHighlights() {
 }
 
 function compareBoardToSolution(currentBoardData, boardSolution) {
-  const inputs = document.querySelectorAll("input");
+  const inputs = document.querySelectorAll(".puzzle-input");
   boardSolution.forEach((correctValue, i) => { 
     if(currentBoardData[i] != correctValue) {
       inputs[i].classList.add("square-in-error");
@@ -210,7 +210,7 @@ function compareBoardToSolution(currentBoardData, boardSolution) {
 }
 
 function resetBoard(boardData) {
-  const inputs = document.querySelectorAll("input");
+  const inputs = document.querySelectorAll(".puzzle-input");
   inputs.forEach((input, i) => {
     if(boardData[i] === ".") {
       input.value = "";
