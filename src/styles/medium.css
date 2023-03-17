@@ -36,9 +36,9 @@
   padding-left: 5px;
   margin: 0;
   font-size: 1.5rem;
+  font-weight: bolder;
   height: 2rem;
-  background-color: green;
-  color: white;
+  background-color: var(--alert-color);
 }
 
 #alert-list section p.square-in-error {
@@ -47,8 +47,7 @@
 }
 
 .alert-button {
-  background-color: green;
-  color: white;
+  background-color: var(--alert-color);
   border: none;
   font-size: 1.5rem;
   height: 2rem;
