@@ -1,6 +1,6 @@
 import { getNewPuzzle, getPuzzleSolution } from "./externalServices.js";
 import { getRandomInt, alertMessage, removeAlertMessage, getLocalStorage, setLocalStorage } from "./utils.js";
-import { setTime, pauseTime, getIsPaused } from "./timer.js";
+import { setTime, pauseTime, getIsPaused, getTotalSeconds, setTotalSeconds } from "./timer.js";
 
 const MAX_LENGTH = 1;
 
@@ -28,7 +28,7 @@ export default class BoardClient {
     this.boardSolution = [];
     this.selectedField = undefined;
     this.boardId = undefined;
-    this.selectElement = document.querySelector("#saved-games")
+    this.selectElement = document.querySelector("#saved-games");
   }
 
   init() {
@@ -53,7 +53,7 @@ export default class BoardClient {
   }
 
   save() {
-    saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, this.boardId);
+    saveGame(this.initialBoardData, getCurrentBoardData(), this.boardSolution, getTotalSeconds());
     getSavedGames(this.selectElement);
   }
 
@@ -63,6 +63,8 @@ export default class BoardClient {
     this.currentBoardData = savedGame.current;
     this.boardSolution = savedGame.solution;
     resetBoard(this.currentBoardData);
+    setTotalSeconds(savedGame.elapseTime);
+    setInterval(setTime, 1000);
   }
 
   delete() {
@@ -235,13 +237,13 @@ function putValue(element, value) {
  element.value = value; 
 }
 
-function saveGame(initial, current, solution) {
+function saveGame(initial, current, solution, elapseTime) {
   let savedGames = getLocalStorage("saved-games");
   if(savedGames === null) {
     savedGames = [];
   }
 
-  const savedGame = { initial: initial, current: current, solution: solution };
+  const savedGame = { initial: initial, current: current, solution: solution, elapseTime: elapseTime };
   savedGames.push(savedGame);
   setLocalStorage("saved-games", savedGames);
 }
