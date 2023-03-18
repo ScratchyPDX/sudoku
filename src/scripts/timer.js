@@ -5,6 +5,9 @@ const secondsLabel = document.getElementById("seconds");
 let totalSeconds = 0;
 let isPaused = false;
 
+export function getIsPaused() {
+  return isPaused;
+}
 export function setTime()
 {
   if(!isPaused) {
