@@ -30,6 +30,7 @@ export default class BoardClient {
     this.selectedField = undefined;
     this.boardId = undefined;
     this.selectElement = document.querySelector("#saved-games");
+    this.timerInterval = undefined;
   }
 
   init() {
@@ -65,8 +66,7 @@ export default class BoardClient {
     this.currentBoardData = savedGame.current;
     this.boardSolution = savedGame.solution;
     resetBoard(this.currentBoardData);
-    setTotalSeconds(savedGame.elapseTime);
-    setInterval(setTime, 1000);
+    this.timerInterval = startClock(savedGame.elapseTime, this.timerInterval);
   }
 
   delete() {
@@ -88,7 +88,7 @@ export default class BoardClient {
     const solution = await getBoardSolution(this.initialBoardData);
     this.boardSolution = Array.from(solution);
     setBoardData(this.initialBoardData);
-    setInterval(setTime, 1000);
+    this.timerInterval = startClock(0, this.timerInterval);
   }
   
   initializeBoard() {
@@ -277,4 +277,12 @@ function deleteGame(selectElement) {
   const savedGames = getLocalStorage("saved-games");
   savedGames.splice(selectElement.selectedIndex, 1);
   setLocalStorage("saved-games", savedGames);
+}
+
+function startClock(totalSeconds, timerInterval) {
+  if(!timerInterval !== undefined) {
+    clearInterval(timerInterval);
+  }
+  setTotalSeconds(totalSeconds);
+  return setInterval(setTime, 1000);
 }
