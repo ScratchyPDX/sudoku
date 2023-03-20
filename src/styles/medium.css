@@ -122,6 +122,25 @@ header {
   min-width: 54rem;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 6rem;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid var(--dark-grey);
+  width: 70%;
+  padding: 10px;
+}
+
 .odd-section {
   background: var(--light-grey);
 }
@@ -218,5 +237,4 @@ select {
   background-color: red;
   color: white;
 }
-
 
