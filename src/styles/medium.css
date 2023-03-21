@@ -1,5 +1,13 @@
 @media only screen and (min-width: 50em) {
 
+  button {
+    font-size: var(--large-font);
+  }
+
+  header {
+    font-size: var(--large-font);
+  }
+  
   .left-side {
     grid-column: 1/2;
   }
@@ -9,7 +17,7 @@
   }
 
   picture img {
-    height: 12rem;
+    height: 10rem;
   }
 
   .puzzle {
@@ -34,5 +42,10 @@
   .puzzle-board input {
     width: 60px;
     height: 60px;
+    font-size: 30px;
+  }
+
+  #saved-games {
+    font-size: var(--large-font);
   }
 }
