@@ -80,18 +80,23 @@ export default class BoardClient {
   }
 
   async setupBoard() {
-    this.initializeBoard();
-    const difficultyElememt = document.getElementsByName("difficulty");
-    let difficulty = difficultyElememt[0].checked ? "easy" : "medium"
-    const puzzle = await getBoardPuzzle(difficulty);
-    this.initialBoardData = Array.from(puzzle);
-    const solution = await getBoardSolution(this.initialBoardData);
-    this.boardSolution = Array.from(solution);
-    setBoardData(this.initialBoardData);
-    this.timerInterval = startClock(0, this.timerInterval);
+    this.playButton.disabled = true;
+    await this.initializeBoard().then(async () => {
+      const difficultyElememt = document.getElementsByName("difficulty");
+      let difficulty = difficultyElememt[0].checked ? "easy" : "medium"
+      await getBoardPuzzle(difficulty).then(async puzzle =>{
+        this.initialBoardData = Array.from(puzzle);
+        await getBoardSolution(this.initialBoardData).then(solution => {
+          this.boardSolution = Array.from(solution);
+          setBoardData(this.initialBoardData);
+          this.timerInterval = startClock(0, this.timerInterval);
+          this.playButton.disabled = false;
+        });
+      });      
+    });
   }
   
-  initializeBoard() {
+  async initializeBoard() {
     this.initialBoardData = [];
     this.boardSolution = [];
     this.currentBoardData = [];
