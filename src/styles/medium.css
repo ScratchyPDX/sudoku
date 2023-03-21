@@ -1,5 +1,9 @@
 @media only screen and (min-width: 50em) {
 
+  .left-side {
+    grid-column: 1/2;
+  }
+
   #main-game {
     grid-template-columns: 8rem 34rem 8rem;
   }
@@ -8,10 +12,18 @@
     height: 12rem;
   }
 
+  .puzzle {
+    grid-column: 2/3;
+  }
+
   .puzzle button {
     width: 2.4em;
     padding: 10px;
     border-radius: 50%;
+  }
+
+  .right-side {
+    grid-column: 3/4;
   }
 
   .puzzle-board {
