@@ -23,6 +23,7 @@ export default class BoardClient {
     this.sevenButton = document.querySelector("#seven-button");
     this.eightButton = document.querySelector("#eight-button");
     this.nineButton = document.querySelector("#nine-button");
+    this.clearButton = document.querySelector("#clear-button");
     this.howToPlayButton = document.querySelector("#how-to-play-button")
     this.initialBoardData = [];
     this.currentBoardData = [];
@@ -50,6 +51,7 @@ export default class BoardClient {
     this.sevenButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 7));
     this.eightButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 8));
     this.nineButton.addEventListener("click", () => this.checkMouseInput(this.selectedField, 9));
+    this.clearButton.addEventListener("click", () => this.clearInput(this.selectedField));
     this.howToPlayButton.addEventListener("click", () => this.howToPlay());
 
     this.drawBoard();
@@ -157,6 +159,10 @@ export default class BoardClient {
   checkMouseInput(element, number) {
     putValue(element, number);
     this.checkInput(element);
+  }
+
+  clearInput(element) {
+    element.value = "";
   }
 
   setSelected(elementId) {
