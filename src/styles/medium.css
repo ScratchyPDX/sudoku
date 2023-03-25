@@ -1,4 +1,4 @@
-@media only screen and (min-width: 50em) {
+@media only screen and (min-width: 48em) {
 
   button {
     font-size: var(--large-font);
@@ -10,10 +10,19 @@
   
   .left-side {
     grid-column: 1/2;
+    grid-row: 1;
   }
 
+  #left-controls {
+    margin: 5px auto;
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto;
+  }
+  
   #main-game {
     grid-template-columns: 8rem 34rem 8rem;
+    grid-template-rows: auto;
   }
 
   picture img {
@@ -22,6 +31,7 @@
 
   .puzzle {
     grid-column: 2/3;
+    grid-row: 1;
   }
 
   .puzzle button {
@@ -32,6 +42,11 @@
 
   .right-side {
     grid-column: 3/4;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    margin-right: auto;   
   }
 
   .puzzle-board {

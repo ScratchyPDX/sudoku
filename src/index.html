@@ -24,12 +24,14 @@
       <div id="main-game">
         <section class="left-side" id="left-side">
           <div id="left-controls">
-            <h2>Level</h2>
-            <input type="radio" id="easy" name="difficulty" value="easy" checked>
-            <label for="easy">Easy</label><br>
-            <input type="radio" id="medium" name="difficulty" value="medium">
-            <label for="medium">Hard</label>
-            <button type="button" id="play-button" class="play-button">Play</button>
+            <div id="game-start">
+              <h2>Level</h2>
+              <input type="radio" id="easy" name="difficulty" value="easy" checked>
+              <label for="easy">Easy</label><br>
+              <input type="radio" id="medium" name="difficulty" value="medium">
+              <label for="medium">Hard</label>
+              <button type="button" id="play-button" class="play-button">Play</button>
+            </div>
             <div id="game-timer">
               <h2>Timer</h2>
               <label id="minutes">00</label>
@@ -37,10 +39,12 @@
               <label id="seconds">00</label>
               <button type="button" id="pause-button" class="pause-button">Pause</button>
             </div>
-            <h2>Help</h2>
-            <button type="button" id="check-button" class="check-button">Check</button>
-            <button type="button" id="reset-button" class="reset-button">Reset</button>
-            <button type="button" id="how-to-play-button" class="how-to-play-button">How To Play</button>
+            <div id="game-help">
+              <h2>Help</h2>
+              <button type="button" id="check-button" class="check-button">Check</button>
+              <button type="button" id="reset-button" class="reset-button">Reset</button>
+              <button type="button" id="how-to-play-button" class="how-to-play-button">How To Play</button>
+            </div>
           </div>
         </section>
         <section class="puzzle" id="puzzle-central">
@@ -57,8 +61,8 @@
           <button type="button" id="clear-button" title="Clear">C</button>
         </section>
         <section class="right-side" id="right-side">
-          <div>
-            <h1>Saved Games</h1>
+          <h1>Saved Games</h1>
+          <div id="game-save">
             <select name="saved-games" id="saved-games" size="5" title="saved games">
             </select>
           </div>
