@@ -123,7 +123,7 @@ export default class BoardClient {
   
     for (let i = 0; i < squares; i++) {
       const inputElement = document.createElement("input");
-      inputElement.setAttribute("type", "number");
+      inputElement.setAttribute("inputmode", "none");
       inputElement.classList.add("puzzle-input")
       inputElement.id = `f${i}`;
       inputElement.addEventListener("click", () => {this.setSelected(inputElement.id)});        
@@ -138,7 +138,8 @@ export default class BoardClient {
 
   checkInput(element) {
     if(getIsPaused()) {pauseTime(this.pauseButton); }
-    if(element.value < 1) { element.value = ""; }
+    let expression = new RegExp("^[1-9]+$");
+    if(!expression.test(element.value)) { element.value = ""; }
     element.value = element.value.slice(0, MAX_LENGTH);
     removeAlertMessage()
     this.currentBoardData = getCurrentBoardData();
