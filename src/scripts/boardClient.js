@@ -123,7 +123,7 @@ export default class BoardClient {
   
     for (let i = 0; i < squares; i++) {
       const inputElement = document.createElement("input");
-      inputElement.setAttribute("type", "number");
+      // inputElement.setAttribute("type", "number");
       inputElement.setAttribute("inputmode", "none");
       inputElement.classList.add("puzzle-input")
       inputElement.id = `f${i}`;
