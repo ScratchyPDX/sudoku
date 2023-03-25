@@ -124,22 +124,19 @@ header {
 }
 
 .modal {
-  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
-  overflow: auto;
   background-color: rgba(0,0,0,0.4);
-  padding-top: 6rem;
-  width: 100%;
+  width: 95%;
 }
 
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto;
+  margin: auto;
   border: 1px solid var(--dark-grey);
-  width: 70%;
+  width: 100%;
   padding: 10px;
 }
 
@@ -148,11 +145,12 @@ header {
 }
 
 picture img {
-  height: 8rem;
+  height: 7rem;
 }
 
 .puzzle {
   grid-row: 1/2;
+  margin-left: 4vw;
 }
 
 .puzzle button {

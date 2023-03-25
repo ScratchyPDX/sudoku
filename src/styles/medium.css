@@ -24,6 +24,14 @@
     grid-template-columns: 8rem 34rem 8rem;
     grid-template-rows: auto;
   }
+  .modal {
+    width: 100%;
+  }
+  
+  .modal-content {
+    margin: 5% auto 15% auto;
+    width: 70%;
+  }
 
   picture img {
     height: 10rem;
@@ -32,6 +40,7 @@
   .puzzle {
     grid-column: 2/3;
     grid-row: 1;
+    margin-left: 0;
   }
 
   .puzzle button {
