@@ -141,6 +141,10 @@ header {
   padding: 10px;
 }
 
+.modal-content h1, .modal-content h2, .modal-content p {
+  font-size: var(--base-font);
+}
+
 .odd-section {
   background: var(--light-grey);
 }
