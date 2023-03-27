@@ -1,4 +1,5 @@
 import BoardClient from "./boardClient.js";
-screen.orientation.lock("portrait");
+let screenOrientation = window.screen.orientation
+screenOrientation.lock("portrait-primary");
 const board = new BoardClient("#play-button", "#check-button", "#reset-button", "#save-button", "#load-button", "#delete-button");
 board.init();
