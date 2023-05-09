@@ -181,6 +181,8 @@ function setBoardData(boardData) {
   inputs.forEach((input, i) => {
     if(boardData[i] != ".") {
       input.value = boardData[i];
+      input.classList.add("initial-value");
+      input.readOnly = true;
     }
   });
 }  

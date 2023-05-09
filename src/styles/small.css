@@ -225,3 +225,10 @@ select {
   color: white;
 }
 
+.puzzle-input {
+  color: blue;
+}
+
+.initial-value {
+  color: black;
+}
