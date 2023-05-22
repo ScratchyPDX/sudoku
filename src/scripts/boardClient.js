@@ -236,7 +236,7 @@ function clearFieldHighlights() {
 function compareBoardToSolution(currentBoardData, boardSolution) {
   const inputs = document.querySelectorAll(".puzzle-input");
   boardSolution.forEach((correctValue, i) => { 
-    if(currentBoardData[i] != correctValue) {
+    if(currentBoardData[i] != "." && currentBoardData[i] != correctValue) {
       inputs[i].classList.add("square-in-error");
     }
   });
