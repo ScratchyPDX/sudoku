@@ -67,7 +67,7 @@ export default class BoardClient {
     this.initialBoardData = savedGame.initial;
     this.currentBoardData = savedGame.current;
     this.boardSolution = savedGame.solution;
-    resetBoard(this.currentBoardData);
+    restoreBoard(this.currentBoardData, this.initialBoardData);
     this.timerInterval = startClock(savedGame.elapseTime, this.timerInterval);
   }
 
@@ -242,14 +242,31 @@ function compareBoardToSolution(currentBoardData, boardSolution) {
   });
 }
 
-function resetBoard(boardData) {
+function resetBoard(initialBoard) {
   const inputs = document.querySelectorAll(".puzzle-input");
   inputs.forEach((input, i) => {
-    if(boardData[i] === ".") {
+    if(initialBoard[i] === ".") {
       input.value = "";
     }
     else {
-      input.value = boardData[i];
+      input.value = initialBoard[i];
+    }
+  });
+}
+
+function restoreBoard(currentBoard, initialBoard) {
+  const inputs = document.querySelectorAll(".puzzle-input");
+  inputs.forEach((input, i) => {
+    if(currentBoard[i] === "." && initialBoard[i] === ".") {
+      input.value = "";
+    }
+    else if(initialBoard[i] !== ".") {
+      input.value = initialBoard[i];
+      input.classList.add("initial-value");
+      input.readOnly = true;
+    }
+    else {
+      input.value = currentBoard[i];
     }
   });
 }
